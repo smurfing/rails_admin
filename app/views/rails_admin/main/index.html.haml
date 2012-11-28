@@ -120,8 +120,6 @@
       %tbody
         - @objects.each do |object|
           %tr
-            %td.last.links
-              %ul.inline= menu_for :member, @abstract_model, object, true
             %td
               = check_box_tag "bulk_ids[]", object.id, false
             - if @other_left_link ||= other_left && index_path(params.except('set').merge(params[:set].to_i != 1 ? {:set => (params[:set].to_i - 1)} : {}))
@@ -131,6 +129,8 @@
               %td{:class => "#{property.css_class} #{property.type_css_class}", :title => strip_tags(value)}= value
             - if @other_right_link ||= other_right && index_path(params.merge(:set => (params[:set].to_i + 1)))
               %td.other.right= link_to "...", @other_right_link, :class => 'pjax'
+            %td.last.links
+              %ul.inline= menu_for :member, @abstract_model, object, true
     - if @objects.respond_to?(:total_count)
       - total_count = @objects.total_count.to_i
       = paginate(@objects, :theme => 'twitter-bootstrap', :remote => true)
